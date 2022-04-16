@@ -36,13 +36,13 @@ recordRoutes.route("/record/:id").get(function (req, res) {
       });
 });
 
-/*
+
 // This section will help you create a new record.
 recordRoutes.route("/record/add").post(function (req, response) {
   let db_connect = dbo.getDb();
   let myobj = {
     title: req.body.title,
-    answer: req.body.answer,
+    owner: req.body.owner,
   };
   db_connect.collection("records").insertOne(myobj, function (err, res) {
     if (err) throw err;
@@ -50,6 +50,7 @@ recordRoutes.route("/record/add").post(function (req, response) {
   });
 });
 
+/*
 // This section will help you update a record by id.
 recordRoutes.route("/update/:id").post(function (req, response) {
   let db_connect = dbo.getDb();  
@@ -62,7 +63,7 @@ recordRoutes.route("/update/:id").post(function (req, response) {
     },  
   }
 });
-
+*/
 
 // This section will help you delete a record
 recordRoutes.route("/:id").delete((req, response) => {
@@ -74,5 +75,5 @@ recordRoutes.route("/:id").delete((req, response) => {
     response.json(obj);
   });
 });
-*/
+
 module.exports = recordRoutes;
