@@ -1,9 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
  
 const Record = (props) => (
  <tr>
    <td>{props.record.title}</td>
-   <td>{props.record.answer}</td>
+   <td>{props.record.owner}</td>
+   <td>
+       {/* need to change edit button to go to the notecards view*/}
+     <Link className="btn btn-link" to={`/edit/${props.record._id}`}>Go</Link> |
+     <button className="btn btn-link"
+       onClick={() => {
+         props.deleteRecord(props.record._id);
+       }}
+     >
+       Delete
+     </button>
+   </td>
  </tr>
 );
  
@@ -30,6 +42,15 @@ export default function RecordList() {
    return;
  }, [records.length]);
  
+ // This method will delete a record
+ async function deleteRecord(id) {
+   await fetch(`http://localhost:5000/${id}`, {
+     method: "DELETE"
+   });
+ 
+   const newRecords = records.filter((el) => el._id !== id);
+   setRecords(newRecords);
+ }
  
  // This method will map out the records on the table
  function recordList() {
@@ -37,6 +58,7 @@ export default function RecordList() {
      return (
        <Record
          record={record}
+         deleteRecord={() => deleteRecord(record._id)}
          key={record._id}
        />
      );
@@ -50,9 +72,8 @@ export default function RecordList() {
      <table className="table table-striped" style={{ marginTop: 20 }}>
        <thead>
          <tr>
-           <th>Name</th>
-           <th>Position</th>
-           <th>Level</th>
+           <th>Deck Name</th>
+           <th>Owner</th>
            <th>Action</th>
          </tr>
        </thead>
