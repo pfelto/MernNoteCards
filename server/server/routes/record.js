@@ -36,13 +36,13 @@ recordRoutes.route("/record/:id").get(function (req, res) {
       });
 });
 
+/*
 // This section will help you create a new record.
 recordRoutes.route("/record/add").post(function (req, response) {
   let db_connect = dbo.getDb();
   let myobj = {
-    name: req.body.name,
-    position: req.body.position,
-    level: req.body.level,
+    title: req.body.title,
+    answer: req.body.answer,
   };
   db_connect.collection("records").insertOne(myobj, function (err, res) {
     if (err) throw err;
@@ -74,5 +74,5 @@ recordRoutes.route("/:id").delete((req, response) => {
     response.json(obj);
   });
 });
-
+*/
 module.exports = recordRoutes;
