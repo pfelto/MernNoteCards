@@ -7,7 +7,7 @@ const Record = (props) => (
    <td>{props.record.owner}</td>
    <td>
        {/* need to change edit button to go to the notecards view*/}
-     <Link className="btn btn-link" to={`/edit/${props.record._id}`}>Go</Link> |
+     <Link className="btn btn-link" to={`/${props.record.owner}/${props.record.title}/notecard`}>Go</Link> |
      <button className="btn btn-link"
        onClick={() => {
          props.deleteRecord(props.record._id);

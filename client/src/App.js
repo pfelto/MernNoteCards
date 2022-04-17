@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/navbar";
 import RecordList from "./components/recordList";
 import Create from "./components/create";
+import Notecard from "./components/notecard";
  
 const App = () => {
  return (
@@ -14,6 +15,7 @@ const App = () => {
      <Navbar />
      <Routes>
        <Route exact path="/" element={<RecordList />} />
+       <Route path="/:owner/:title/notecard" element={<Notecard />} />
        <Route path="/create" element={<Create />} />
      </Routes>
    </div>

@@ -20,6 +20,7 @@ recordRoutes.route("/record").get(function (req, res) {
     .find({})
     .toArray(function (err, result) {
       if (err) throw err;
+      
       res.json(result);
     });
 });
@@ -28,6 +29,7 @@ recordRoutes.route("/record").get(function (req, res) {
 recordRoutes.route("/record/:id").get(function (req, res) {
   let db_connect = dbo.getDb();
   let myquery = { _id: ObjectId( req.params.id )};
+
   db_connect
       .collection("records")
       .findOne(myquery, function (err, result) {
@@ -69,6 +71,7 @@ recordRoutes.route("/update/:id").post(function (req, response) {
 recordRoutes.route("/:id").delete((req, response) => {
   let db_connect = dbo.getDb();
   let myquery = { _id: ObjectId( req.params.id )};
+  console.log(myquery)
   db_connect.collection("records").deleteOne(myquery, function (err, obj) {
     if (err) throw err;
     console.log("1 document deleted");

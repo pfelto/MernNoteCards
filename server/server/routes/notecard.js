@@ -12,13 +12,16 @@ const dbo = require("../db/conn");
 const ObjectId = require("mongodb").ObjectId;
 
 // This section will help you get a list of all the records.
-notecardRoutes.route("/record/:id/notecard").get(function (req, res) {
+notecardRoutes.route("/:owner/:title/notecard").get(function (req, res) {
     let db_connect = dbo.getDb("notecardApp");
+    let myquery = { owner: String(req.params.owner), title: String(req.params.title)};
     db_connect
       .collection("notecards")
-      .find({})
+      .find(myquery)
       .toArray(function (err, result) {
         if (err) throw err;
         res.json(result);
       });
   });
+
+  module.exports = notecardRoutes;
