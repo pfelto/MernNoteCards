@@ -11,7 +11,7 @@ import Notecard from "./components/notecard";
  
 const App = () => {
  return (
-   <div>
+   <div style={{display:'flex', flexDirection:'column', minHeight: '100vh' }}>
      <Navbar />
      <Routes>
        <Route exact path="/" element={<RecordList />} />

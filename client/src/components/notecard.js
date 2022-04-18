@@ -4,18 +4,16 @@ import { useParams } from 'react-router-dom';
 // If none then just show a blank card that cannot be clicked? 
 
 const Card = (props) => (
-    <tr>
-        <td>{props.record.header}</td>
-        <td>{props.record.body}</td>
-        <td>{props.record.owner}</td>
-        <td>{props.record.title}</td>
-        <td>{props.position}</td>
-    </tr>
-   );
+      <div style={props.style} onClick={() => props.onClick()}>
+      <p style={{alignSelf: 'center'}}>{!props.flipped ? props.record.header : props.record.body}</p>
+      </div>)
+  
 
+  
 const Notecard = () => {
     const [theNotecards, settheNotecards] = useState([]);
-    const [position,setPosition] = useState(0)
+    const [position,setPosition] = useState(0);
+    const [flipped, setFlipped] = useState(false);
     let {owner, title } = useParams();
     // This method fetches the records from the database.
     useEffect(() => {
@@ -37,36 +35,61 @@ const Notecard = () => {
       return;
     }, [theNotecards.length,owner,title]);
 
+    function notecardClick(){
+      setFlipped(!flipped);
+    }
 
-     // This method will map out the records on the table
- function notecardList() {
-    return theNotecards.map((record,index) => {
-      return (
-        <Card
-          record={record}
-          position={index}
-          key={record._id}
-        />
-      );
-    });
-  }
+    let backDisabled = position === 0 ? true : false;
+    let forwardDisabled = position === theNotecards.length - 1 ? true : false
+
+    let content = theNotecards.length !== 0 ? 
+    <Card 
+      style={{
+      display:'flex', 
+      flexDirection: 'column',
+      justifyContent: 'center',
+      border: '1px solid black', 
+      boxShadow: '5px 10px', 
+      width: '70%',
+      fontWeight: 'bolder',
+      cursor: 'pointer',
+      }} 
+      flipped={flipped} 
+      record={theNotecards[position]}
+      onClick={() => notecardClick()}
+    /> : null
 
   return (
-    <div>
-    <h3>Notecard List</h3>
-    <table className="table table-striped" style={{ marginTop: 20 }}>
-      <thead>
-        <tr>
-          <th>Header</th>
-          <th>Body</th>
-          <th>Owner</th>
-          <th>Title</th>
-          <th>Position</th>
-        </tr>
-      </thead>
-      <tbody>{notecardList()}</tbody>
-    </table>
-  </div>
+    <div 
+      style={{
+      display: 'flex', 
+      flex: '1 1 auto',
+      flexDirection: 'column', 
+      border: '1px solid red',
+      padding: '10px 0 0'}}
+      
+    >
+      <div style={{width: '100vw', flex:'3 1 auto', display: 'flex', justifyContent: 'center'}}>
+        {content}
+      </div>
+      <div style={{width: '100vw',flex:'1 1 auto', display:'flex', alignItems: 'center', justifyContent: 'space-evenly'}} >
+        <button disabled={backDisabled} 
+        onClick={()=>
+          {
+            setPosition((position)=>position - 1);
+            setFlipped(false);
+          }
+        }
+          >Back</button>
+        <button>Create New Card</button>
+        <button disabled={forwardDisabled} 
+        onClick={()=>{
+          setPosition((position)=>position + 1);
+          setFlipped(false);
+        }}
+        >Forward</button>
+      </div>
+    </div>
 
   )
 }
